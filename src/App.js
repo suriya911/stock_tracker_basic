@@ -8,7 +8,7 @@ function App() {
   // const [submitted, setSubmited] = useState(false);
   const intervalRef = useRef(null);
 
-  const API_KEY = process.env.REACT_APP_FINNHUB_API_KEY;
+  const API_KEY = process.env.FINNHUB_API_KEY;
 
   const fetchStockData = async () => {
     if (!symbol.trim()) return;

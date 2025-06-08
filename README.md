@@ -19,6 +19,17 @@ A real-time stock price tracking application built with React that allows users 
 - Finnhub API key
 - Docker and Docker Compose (for containerized deployment)
 
+## API Key Setup
+
+1. Sign up for a free API key at [Finnhub](https://finnhub.io/)
+2. Create a `.env` file in the root directory of the project
+3. Add your API key to the `.env` file:
+```
+FINNHUB_API_KEY=your_api_key_here
+```
+
+Note: Never commit your `.env` file to version control. It's already added to `.gitignore`.
+
 ## Installation
 
 ### Local Development
@@ -36,12 +47,7 @@ npm install
 yarn install
 ```
 
-3. Create a `.env` file in the root directory and add your Finnhub API key:
-```
-REACT_APP_FINNHUB_API_KEY=your_api_key_here
-```
-
-4. Start the development server:
+3. Start the development server:
 ```bash
 npm start
 # or
@@ -50,12 +56,14 @@ yarn start
 
 ### Docker Deployment
 
-1. Build and run using Docker Compose:
+1. Make sure your `.env` file is set up with the API key
+
+2. Build and run using Docker Compose:
 ```bash
 docker-compose up --build
 ```
 
-2. Or build and run using Docker directly:
+3. Or build and run using Docker directly:
 ```bash
 # Build the image
 docker build -t stock-price-tracker .
