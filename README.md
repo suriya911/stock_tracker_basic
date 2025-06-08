@@ -1,70 +1,118 @@
-# Getting Started with Create React App
+# Stock Price Tracker
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A real-time stock price tracking application built with React that allows users to monitor stock prices at customizable intervals.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- Real-time stock price tracking
+- Customizable tracking intervals (minutes and seconds)
+- Manual data fetching
+- Tabular display of stock data
+- Company profile information
+- Responsive design
+- Docker support for easy deployment
 
-### `npm start`
+## Prerequisites
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Node.js (v14 or higher)
+- npm or yarn
+- Finnhub API key
+- Docker and Docker Compose (for containerized deployment)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Installation
 
-### `npm test`
+### Local Development
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Clone the repository:
+```bash
+git clone <your-repository-url>
+cd stock-price-tracker
+```
 
-### `npm run build`
+2. Install dependencies:
+```bash
+npm install
+# or
+yarn install
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+3. Create a `.env` file in the root directory and add your Finnhub API key:
+```
+REACT_APP_FINNHUB_API_KEY=your_api_key_here
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+4. Start the development server:
+```bash
+npm start
+# or
+yarn start
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Docker Deployment
 
-### `npm run eject`
+1. Build and run using Docker Compose:
+```bash
+docker-compose up --build
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+2. Or build and run using Docker directly:
+```bash
+# Build the image
+docker build -t stock-price-tracker .
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+# Run the container
+docker run -p 80:80 -e REACT_APP_FINNHUB_API_KEY=your_api_key_here stock-price-tracker
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+The application will be available at `http://localhost:80`
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Usage
 
-## Learn More
+1. Enter the stock symbol (e.g., AAPL, MSFT, GOOGL)
+2. Set the tracking interval:
+   - Enter minutes (optional)
+   - Enter seconds (optional)
+3. Click "Track" to start automatic tracking
+4. Click "Fetch Data" to manually fetch current data
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Data Displayed
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Company Name
+- Opening Price
+- High Price
+- Low Price
+- Current Price
+- Previous Close Price
+- Timestamp
 
-### Code Splitting
+## API Integration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+This application uses the Finnhub API for real-time stock data:
+- Quote endpoint for price data
+- Profile endpoint for company information
 
-### Analyzing the Bundle Size
+## Technologies Used
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- React
+- JavaScript (ES6+)
+- Finnhub API
+- CSS (Inline styles)
+- Docker
+- Nginx
 
-### Making a Progressive Web App
+## Contributing
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-### Advanced Configuration
+## License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-### Deployment
+## Acknowledgments
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Finnhub for providing the stock market API
+- React team for the amazing framework
