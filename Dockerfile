@@ -1,32 +1,24 @@
-# Build stage
-FROM node:18-alpine as build
-
-# Set working directory
+# Stage 1: build the React frontend
+FROM node:18-alpine AS frontend
 WORKDIR /app
-
-# Copy package files
 COPY package*.json ./
-
-# Install dependencies
-RUN npm install
-
-# Copy all files
-COPY . .
-
-# Build the app
+RUN npm ci --legacy-peer-deps
+COPY public ./public
+COPY src ./src
 RUN npm run build
 
-# Production stage
-FROM nginx:alpine
+# Stage 2: run the FastAPI backend and serve the built assets
+FROM python:3.11-slim AS runtime
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+WORKDIR /app
 
-# Copy built assets from build stage
-COPY --from=build /app/build /usr/share/nginx/html
+COPY backend/requirements.txt ./backend/requirements.txt
+RUN pip install --no-cache-dir -r backend/requirements.txt
 
-# Copy nginx configuration
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY backend ./backend
+COPY --from=frontend /app/build ./build
 
-# Expose port 80
-EXPOSE 80
+EXPOSE 8080
 
-# Start nginx
-CMD ["nginx", "-g", "daemon off;"] 
+CMD ["uvicorn", "backend.app:app", "--host", "0.0.0.0", "--port", "8080"]
