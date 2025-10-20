@@ -84,6 +84,28 @@ The application will be available at [http://localhost:8080](http://localhost:80
 - Annualised historical volatility (log returns)
 - Timestamp of the latest refresh
 
+## Testing
+
+End-to-end validation of the project covers both the React interface and the FastAPI backend.
+
+```bash
+# Frontend tests (Jest + React Testing Library)
+npm test -- --watchAll=false
+
+# Production bundle build (ensures the SPA compiles for deployment)
+npm run build
+
+# Backend tests (Pytest + FastAPI TestClient)
+pytest backend/tests
+
+# Docker image build (matches the CI release step)
+docker build -t stock-tracker .
+```
+
+All of the above checks are executed automatically for every pull request and push via the
+`CI/CD` workflow defined in [`.github/workflows/test.yml`](.github/workflows/test.yml), which
+also verifies that the Docker image can be produced successfully.
+
 ## API Integration
 
 All pricing data and historical candles are sourced from NSE public APIs, aligning with the data exposed by the `nsepython` library.
@@ -113,3 +135,26 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - The NSE India team for maintaining the public market data endpoints
 - The maintainers of `nsepython` for documenting accessible NSE datasets
 - React team for the amazing framework
+
+## Publishing Changes to GitHub
+
+Follow these steps to publish your local work to GitHub once you are happy with the changes:
+
+1. **Log in to GitHub and generate a Personal Access Token (PAT)** if you have not already done so. Go to <https://github.com/settings/tokens>, create a classic token with the `repo` scope, and copy it somewhere safe. The PAT is used as your password when pushing over HTTPS.
+2. **Add your GitHub repository as a remote** (run this only the first time in a fresh clone):
+   ```bash
+   git remote add origin https://github.com/<your-user-or-org>/<your-repo>.git
+   ```
+3. **Confirm you are on the branch you wish to publish** and review the history:
+   ```bash
+   git status -sb
+   git log --oneline --decorate --graph -5
+   ```
+4. **Push the branch to GitHub**, authenticating with your PAT when prompted for a password:
+   ```bash
+   git push -u origin $(git rev-parse --abbrev-ref HEAD)
+   ```
+5. **Open a pull request or merge the branch** in the GitHub web UI as required by your workflow. For direct pushes to the default branch, make sure the CI workflow in [`.github/workflows/test.yml`](.github/workflows/test.yml) passes locally (`npm test`, `pytest backend/tests`, `npm run build`, and `docker build`) before you push.
+
+If you prefer SSH over HTTPS, configure an SSH key with GitHub and replace the remote URL with the SSH variant (for example `git@github.com:<user>/<repo>.git`).
+
